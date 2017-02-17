@@ -67,9 +67,10 @@ module Padrino
     # The call handler setup to route a request given the mappings specified.
     def call(env)
       began_at = Time.now
-      path_info = env["PATH_INFO"].to_s
-      script_name = env['SCRIPT_NAME']
-      http_host = env['HTTP_HOST']
+      req = Sinatra::Request.new(env)
+      path_info = req.path_info
+      script_name = req.script_name
+      http_host = req.host
       last_result = nil
 
       @mapping.each do |host, path, match, app|
